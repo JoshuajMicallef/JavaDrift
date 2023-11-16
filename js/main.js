@@ -1,6 +1,8 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const play = document.getElementById("play");
+const start = document.getElementById("start");
+const startingScreen = document.getElementById("homepage")
 const minScoreUpdateInterval = 50; 
 const minObstacleCreationInterval = 450;
 const laneWidth = canvas.width / 3;
@@ -20,6 +22,7 @@ let obstacleUpdateInterval = 2000;
 let lastScoreThreshold = 0;
 let lastObstacleThreshold = 0;
 let coinCreationIntervalId;
+
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'a') {
@@ -138,3 +141,31 @@ function restartGame() {
 
 // Initialize the game
 updateCarLane(currentLane);
+
+start.addEventListener("click", function(){
+    startingScreen.classList.add("hide");
+})
+
+canvas.addEventListener('touchstart', handleTouchStart, false);
+
+function handleTouchStart(event) {
+    event.preventDefault(); // Prevent default behavior
+
+    let touch = event.touches[0];
+    let rect = canvas.getBoundingClientRect();
+    let scaleX = canvas.width / rect.width;    // relationship bitmap vs. element for X
+    let scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for Y
+
+    let touchX = (touch.clientX - rect.left) * scaleX; // Scale touch coordinates
+    let touchY = (touch.clientY - rect.top) * scaleY;  // Scale touch coordinates
+
+    // Determine which lane was touched and move the car to that lane
+    if (touchX < laneWidth) {
+        updateCarLane(0); // Left lane
+    } else if (touchX < laneWidth * 2) {
+        updateCarLane(1); // Middle lane
+    } else {
+        updateCarLane(2); // Right lane
+    }
+}
+
