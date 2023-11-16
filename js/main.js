@@ -24,7 +24,21 @@ let lastScoreThreshold = 0;
 let lastObstacleThreshold = 0;
 let coinCreationIntervalId;
 let obstaclesCreated = 0;
+let lastTime = 0;
 
+
+function adjustSpeedForScreenSize() {
+    const baseSpeed = 0.5; // Base speed for a standard screen size (e.g., 1920x1080)
+    const standardWidth = 1920; // Width of the standard screen size
+
+    // Calculate speed factor based on current screen width
+    const speedFactor = window.innerWidth / standardWidth;
+
+    // Adjust speeds
+    speed = baseSpeed * speedFactor;
+    obstacleSpeed = baseSpeed * speedFactor;
+    coinSpeed = baseSpeed * speedFactor;
+}
 
 function resizeCanvas() {
     const maxWidth = 1200; // Maximum width you want for the canvas
@@ -44,6 +58,8 @@ function resizeCanvas() {
         laneWidth * 2 + laneWidth / 2
     ];
 
+    adjustSpeedForScreenSize();
+
     // Update car position based on current lane
     updateCarLane(currentLane);
 
@@ -54,7 +70,6 @@ function resizeCanvas() {
     drawObstacles();
     drawCoins();
 }
-
 
 window.addEventListener('load', resizeCanvas);
 window.addEventListener('resize', resizeCanvas);
@@ -105,7 +120,7 @@ obstacleOccurrenceUpdateIntervalId = setInterval(updateObstacleOccurance, 5000);
 
 
 // Game loop function
-function gameLoop() {
+function gameLoop(timestamp) {
     if (isGameOver) {
         cancelAnimationFrame(animationFrameId); // Stop the game loop
         clearInterval(obstacleCreationIntervalId); // Clear obstacle creation interval
@@ -114,13 +129,20 @@ function gameLoop() {
         displayGameOverMessage();
         return; // Exit the function
     }
+
+    let deltaTime = timestamp - lastTime;
+    lastTime = timestamp;
+
+    // Use delta time to adjust movement
+    const movementSpeed = 0.05; // Base speed
+    const adjustedSpeed = movementSpeed * deltaTime;
     
     // Game update logic
-    updateBackgroundSpeed();
-    updateObstacleSpeed();
-    updateScoreCounterSpeed();
-    updateObstacleOccurance();
-    updateCoins();
+    updateBackgroundSpeed(adjustedSpeed);
+    updateObstacleSpeed(adjustedSpeed);
+    updateScoreCounterSpeed(adjustedSpeed);
+    updateObstacleOccurance(adjustedSpeed);
+    updateCoins(adjustedSpeed);
 
     console.log("Speed: " + speed)
     console.log("Obstacle Interval: " + obstacleUpdateInterval)
@@ -199,7 +221,6 @@ function handleTouchStart(event) {
     let touch = event.touches[0];
     let rect = canvas.getBoundingClientRect();
     let scaleX = canvas.width / rect.width;    // relationship bitmap vs. element for X
-    let scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for Y
 
     let touchX = (touch.clientX - rect.left) * scaleX; // Scale touch coordinates
 
