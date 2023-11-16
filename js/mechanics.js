@@ -1,8 +1,8 @@
 let isGameOver = false;
-let car = { width: 20, height: 30 };
+let car = { width: 60, height: 80 };
 const coinImageSrc = "assets/images/coin.png"; // Path to coin image
-const coinWidth = 15;
-const coinHeight = 15;
+const coinWidth = 40;
+const coinHeight = 40;
 let coins = []; // Array to hold coins
 let coinSpeed = 0.5;
 
@@ -11,7 +11,7 @@ let coinSpeed = 0.5;
 function updateCarLane(laneIndex) {
     currentLane = Math.max(0, Math.min(laneIndex, laneCenters.length - 1));
     car.x = laneCenters[currentLane] - halfCarWidth;
-    car.y = canvas.height - car.height - 5; // Position car towards the bottom
+    car.y = canvas.height - car.height - 20; // Position car towards the bottom
 }
 
 let obstacles = [];
@@ -19,9 +19,9 @@ const obstacleWidth = 20;
 const obstacleHeight = 10;
 let obstacleSpeed = .5;
 const obstacleImages = [
-    { src: "assets/images/granny.png", width: 23, height: 27 },
-    { src: "assets/images/pothole.png", width: 30, height: 30 },
-    { src: "assets/images/puppy.png", width: 20, height: 20 }
+    { src: "assets/images/granny.png", width: 60, height: 75 },
+    { src: "assets/images/pothole.png", width: 80, height: 80 },
+    { src: "assets/images/puppy.png", width: 55, height: 65 }
 ];
 
 // Function to create a new obstacle
@@ -41,6 +41,7 @@ function createObstacle() {
         height: imageInfo.height, 
         image: obstacleImage 
     });
+    obstaclesCreated++;
 }
 
 
@@ -76,7 +77,7 @@ function updateObstacles() {
 
 function updateObstacleSpeed() {
     if (score % 5 === 0 && score !== 0) { // Example: Increase speed for every 10 points
-        obstacleSpeed += 0.0005; // Adjust the increment as needed
+        obstacleSpeed += 0.0025; // Adjust the increment as needed
     }
 }
 
@@ -132,4 +133,3 @@ function createCoin() {
         image: coinImage 
     });
 }
-
