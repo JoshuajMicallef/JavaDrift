@@ -75,12 +75,6 @@ function updateObstacles() {
     }
 }
 
-function updateObstacleSpeed() {
-    if (score % 5 === 0 && score !== 0) { // Example: Increase speed for every 10 points
-        obstacleSpeed += 0.0025; // Adjust the increment as needed
-    }
-}
-
 function isLaneAvailable(laneIndex) {
     return !obstacles.some(obstacle => {
         return Math.abs(laneCenters[laneIndex] - obstacle.x) < Math.max(obstacleWidth, coinWidth);
@@ -133,3 +127,4 @@ function createCoin() {
         image: coinImage 
     });
 }
+
