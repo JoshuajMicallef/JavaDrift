@@ -195,11 +195,12 @@ function restartGame() {
     obstacleUpdateInterval = 5000;
     isGameOver = false;
     obstacles = []; // Clear existing obstacles
+    coins = [];
     backgroundY = 0; // Reset background position
     speed = 0.5; // Reset background speed if it changes during the game
-    obstacleSpeed = 0.5; // Reset obstacle speed if it changes
     currentLane = 1;
     updateCarLane(currentLane);
+    adjustSpeedForScreenSize();
 
     // Reset score display
     document.getElementById("score-count").innerHTML = `<strong>${score}</strong>`;
