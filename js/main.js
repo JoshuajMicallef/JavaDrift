@@ -32,7 +32,7 @@ function adjustSpeedForScreenSize() {
     const standardWidth = 1920; // Width of the standard screen size
 
     // Calculate speed factor based on current screen width
-    const speedFactor = window.innerWidth / (standardWidth + 1);
+    const speedFactor = (window.innerWidth / standardWidth) + 1;
 
     // Adjust speeds
     speed = baseSpeed * speedFactor;
