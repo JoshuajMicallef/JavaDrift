@@ -1,0 +1,49 @@
+.menu-selector {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu {
+    width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.score {
+    width: auto;
+    display: flex;
+    justify-content: right;
+    column-gap: 28px;
+    font-size: 24;
+}
+
+.section {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+}
+
+.game-container {
+    background-image: url(assets/images/road.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 90%;
+    width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ 
+.game-canvas {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
