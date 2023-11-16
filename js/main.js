@@ -4,7 +4,7 @@ const play = document.getElementById("play");
 const start = document.getElementById("start");
 const startingScreen = document.getElementById("homepage")
 const minScoreUpdateInterval = 50; 
-const minObstacleCreationInterval = 600;
+const minObstacleCreationInterval = 800;
 var laneWidth = canvas.width / 3;
 var halfCarWidth = car.width / 2;
 var laneCenters = [
@@ -18,7 +18,7 @@ let animationFrameId;
 let scoreIntervalId;
 let isGamePaused = false;
 let scoreUpdateInterval = 1000;
-let obstacleUpdateInterval = 4000;
+let obstacleUpdateInterval = 5000;
 let obstacleOccurrenceUpdateIntervalId;
 let lastScoreThreshold = 0;
 let lastObstacleThreshold = 0;
@@ -32,7 +32,7 @@ function adjustSpeedForScreenSize() {
     const standardWidth = 1920; // Width of the standard screen size
 
     // Calculate speed factor based on current screen width
-    const speedFactor = (window.innerWidth / standardWidth) + 1;
+    const speedFactor = (window.innerWidth / standardWidth) + 1.5;
 
     // Adjust speeds
     speed = baseSpeed * speedFactor;
@@ -186,7 +186,7 @@ function restartGame() {
     // Reset game variables
     score = 0;
     scoreUpdateInterval = 1000;
-    obstacleUpdateInterval = 4000;
+    obstacleUpdateInterval = 5000;
     isGameOver = false;
     obstacles = []; // Clear existing obstacles
     backgroundY = 0; // Reset background position
