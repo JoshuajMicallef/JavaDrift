@@ -88,7 +88,13 @@ function update() {
 
 function updateBackgroundSpeed() {
     if (score % 5 === 0 && score !== 0) { // Example: Increase speed for every 10 points
-        speed += 0.0025; // Adjust the increment as needed
+        speed += 0.003; // Adjust the increment as needed
+    }
+}
+
+function updateObstacleSpeed() {
+    if (score % 5 === 0 && score !== 0) { // Example: Increase speed for every 10 points
+        obstacleSpeed += 0.003; // Adjust the increment as needed
     }
 }
 
