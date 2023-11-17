@@ -16,9 +16,20 @@
 .score {
     width: auto;
     display: flex;
+    flex-direction: row;
     justify-content: right;
     column-gap: 28px;
-    font-size: 24;
+}
+
+.score-counter {
+    display: flex;
+    column-gap: 8px;
+    font-size: 22px;
+}
+
+.score-text {
+    margin: 0;
+    padding: 0;
 }
 
 .section {
@@ -77,4 +88,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media (max-width: 767px) {
+    .score {
+        flex-direction: column;
+    }
 }
