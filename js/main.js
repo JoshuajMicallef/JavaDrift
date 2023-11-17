@@ -2,7 +2,7 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const play = document.getElementById("play");
 const start = document.getElementById("start");
-const startingScreen = document.getElementById("homepage")
+const startingScreen = document.getElementById("homepage");
 const minScoreUpdateInterval = 500; 
 const minObstacleCreationInterval = 800;
 var laneWidth = canvas.width / 3;
@@ -25,6 +25,7 @@ let lastObstacleThreshold = 0;
 let coinCreationIntervalId;
 let obstaclesCreated = 0;
 let lastTime = 0;
+let highScore = 0;
 
 
 function adjustSpeedForScreenSize() {
@@ -71,7 +72,11 @@ function resizeCanvas() {
     drawCoins();
 }
 
-window.addEventListener('load', resizeCanvas);
+window.addEventListener('load', function() {
+    highScore = localStorage.getItem('highScore') || 0;
+    document.getElementById('high-score').textContent = `${highScore}`;
+    resizeCanvas();
+});
 window.addEventListener('resize', resizeCanvas);
 
 
@@ -111,7 +116,7 @@ function updateObstacleOccurance() {
     // Only adjust the interval if an obstacle has been created since the last check
     if (obstaclesCreated > 0 && obstacleUpdateInterval - 100 >= minObstacleCreationInterval) {
         clearInterval(obstacleCreationIntervalId);
-        obstacleUpdateInterval -= 100;
+        obstacleUpdateInterval -= 150;
         obstacleCreationIntervalId = setInterval(createObstacle, obstacleUpdateInterval);
         
         // Reset the counter
@@ -194,10 +199,16 @@ function restartGame() {
     scoreUpdateInterval = 1000;
     obstacleUpdateInterval = 5000;
     isGameOver = false;
+
     obstacles = []; // Clear existing obstacles
     coins = [];
+    obstaclesCreated = 0;
+
     backgroundY = 0; // Reset background position
     speed = 0.5; // Reset background speed if it changes during the game
+    currentLane = 1;
+    coinSpeed = 0.5;
+
     currentLane = 1;
     updateCarLane(currentLane);
     adjustSpeedForScreenSize();
@@ -209,7 +220,11 @@ function restartGame() {
     if (!animationFrameId) {
         gameLoop();
     }
-    scoreIntervalId = setInterval(updateScore, 1000);
+
+    scoreIntervalId = setInterval(updateScore, scoreUpdateInterval); // Start score counter, updating every second
+    obstacleCreationIntervalId = setInterval(createObstacle, obstacleUpdateInterval); // Start obstacle creation
+    coinCreationIntervalId = setInterval(createCoin, 4000); // Start coin creation
+    obstacleOccurrenceUpdateIntervalId = setInterval(updateObstacleOccurance, 5000); // Set interval for every 5 seconds
 }
 
 
