@@ -3,6 +3,12 @@ var score = 0;
 function updateScore() {
     score++;
     document.getElementById("score-count").innerHTML = `<strong>${score}</strong>`;
+
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('highScore', highScore); // Save to local storage
+        document.getElementById('high-score').textContent = `${highScore}`;
+    }
 }
 
 function displayGameOverMessage() {
